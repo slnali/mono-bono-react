@@ -1,6 +1,21 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import { useState } from 'react'
 import styles from '../styles/Home.module.css'
+
+
+function MonoBonoImageComponent()
+{
+  const [counter,setCounter] = useState(0)
+  function increment() {
+    setCounter(counter+1)
+  } 
+  return <div> <p>{counter}</p> <img src="/monobono.jpeg"/>  
+  <button onClick={increment}> Increment </button>
+  
+  </div>
+
+}
 
 export default function Home() {
   return (
@@ -13,8 +28,9 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
+          Mono Bono <a href="https://nextjs.org">Next.js!</a>
         </h1>
+        <MonoBonoImageComponent/>
 
         <p className={styles.description}>
           Get started by editing{' '}
