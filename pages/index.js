@@ -1,20 +1,86 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { useState } from 'react'
-import styles from '../styles/Home.module.css'
+import { Badge, Box, Image } from '@chakra-ui/react';
+import Head from "next/head";
+import { useState } from "react";
+import styles from "../styles/Home.module.css";
 
+// feed
+// tweets of other people you follow
+// [tweets] => [User usr, str message]
 
-function MonoBonoImageComponent()
-{
-  const [counter,setCounter] = useState(0)
+var tweets = [
+  { id: 1 , user: { name: "Nali" }, message: "Hi You Scrubs. This is my first tweet." },
+  { id: 2, user: { name: "Martin" }, message: "Happy New Year!" },
+  { id: 3, user: { name: "Mert" }, message: "Get me off, this platform, i'm tired" },
+];
+
+function IncrementComponent() {
+  const [counter, setCounter] = useState(0);
   function increment() {
-    setCounter(counter+1)
-  } 
-  return <div> <p>{counter}</p> <img src="/monobono.jpeg"/>  
-  <button onClick={increment}> Increment </button>
-  
-  </div>
+    setCounter(counter + 1);
+  }
+  return (
+    <div>
+      {" "}
+      <p>{counter}</p> <img src="/monobono.jpeg" />
+      <button onClick={increment}> Increment </button>
+    </div>
+  );
+}
 
+// Sample card from Airbnb
+
+function TweetComponent({tweet}) {
+
+  const tweetProperties = {
+    imageUrl: '/monobono.jpeg',
+    imageAlt: 'profile pic',
+    message: tweet.message,
+    sender: tweet.user.name,
+  }
+  
+  return (
+    <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+      <Image src={tweetProperties.imageUrl} alt={tweetProperties.imageAlt} />
+
+      <Box p='6'>
+        <Box display='flex' alignItems='baseline'>
+          <Badge borderRadius='full' px='2' colorScheme='teal'>
+          </Badge>
+          <Box
+            color='gray.500'
+            fontWeight='semibold'
+            letterSpacing='wide'
+            fontSize='xs'
+            ml='2'
+          >
+            User: {tweetProperties.sender}
+          </Box>
+        </Box>
+
+        <Box
+          mt='1'
+          fontWeight='semibold'
+          as='h4'
+          lineHeight='tight'
+          isTruncated
+        >
+          Tweet: {tweetProperties.message}
+        </Box>
+
+        <Box>
+          {/* {tweetProperties.formattedPrice} */}
+          <Box as='span' color='gray.600' fontSize='sm'>
+          </Box>
+        </Box>
+
+        <Box display='flex' mt='2' alignItems='center'>
+          <Box as='span' ml='2' color='gray.600' fontSize='sm'>
+            {/* {tweetProperties.reviewCount} reviews */}
+          </Box>
+        </Box>
+      </Box>
+    </Box>
+  )
 }
 
 export default function Home() {
@@ -28,44 +94,12 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Mono Bono <a href="https://nextjs.org">Next.js!</a>
+          Twali
         </h1>
-        <MonoBonoImageComponent/>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
-        <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
-        </div>
+        {tweets.map(element => {
+           return <TweetComponent key={element.id} tweet={element} />
+        })}
+       
       </main>
 
       <footer className={styles.footer}>
@@ -74,12 +108,12 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{' '}
+          Powered by{" "}
           <span className={styles.logo}>
             <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
           </span>
         </a>
       </footer>
     </div>
-  )
+  );
 }
