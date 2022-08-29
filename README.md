@@ -1,6 +1,5 @@
 This is a [Next.js](https://nextjs.org/) project.
 
-![My Image](p1.png)
 ![My Image](p2.png)
 ![My Image](p3.png)
 
