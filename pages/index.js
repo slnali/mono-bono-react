@@ -1,5 +1,6 @@
-import { Badge, Box, Image } from '@chakra-ui/react';
+import { Box, Image, Text } from '@chakra-ui/react';
 import Head from "next/head";
+import Link from "next/link";
 import { useState } from "react";
 import styles from "../styles/Home.module.css";
 
@@ -8,9 +9,9 @@ import styles from "../styles/Home.module.css";
 // [tweets] => [User usr, str message]
 
 var tweets = [
-  { id: 1 , user: { name: "Nali" }, message: "Hi You Scrubs. This is my first tweet." },
-  { id: 2, user: { name: "Martin" }, message: "Happy New Year!" },
-  { id: 3, user: { name: "Mert" }, message: "Get me off, this platform, i'm tired" },
+  { id: 1 ,username: "Nali" , message: "Hi Scrubs. This is my first tweet." },
+  { id: 2, username: "Martin" , message: "Happy New Year!" },
+  { id: 3, username: "Mert" , message: "Get me off, this platform, i'm tired" },
 ];
 
 function IncrementComponent() {
@@ -35,25 +36,22 @@ function TweetComponent({tweet}) {
     imageUrl: '/monobono.jpeg',
     imageAlt: 'profile pic',
     message: tweet.message,
-    sender: tweet.user.name,
+    sender: tweet.username,
   }
   
   return (
-    <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden'>
+    <Box maxW='sm' borderWidth='1px' borderRadius='lg' overflow='hidden' padding='5' marginBottom={5}>
       <Image src={tweetProperties.imageUrl} alt={tweetProperties.imageAlt} />
 
-      <Box p='6'>
+      <Box p='2'>
         <Box display='flex' alignItems='baseline'>
-          <Badge borderRadius='full' px='2' colorScheme='teal'>
-          </Badge>
           <Box
             color='gray.500'
             fontWeight='semibold'
             letterSpacing='wide'
-            fontSize='xs'
-            ml='2'
+            fontSize='inherit'
           >
-            User: {tweetProperties.sender}
+            {tweetProperties.sender}
           </Box>
         </Box>
 
@@ -64,10 +62,13 @@ function TweetComponent({tweet}) {
           lineHeight='tight'
           isTruncated
         >
-          Tweet: {tweetProperties.message}
+          <Text wrap='wrap'>{tweetProperties.message}</Text>
+          
         </Box>
 
-        <Box>
+        <Box color='teal.500'>
+        <Link  href={{ pathname: "/profile",
+                      query: tweetProperties }}>Click to go to profile</Link>
           {/* {tweetProperties.formattedPrice} */}
           <Box as='span' color='gray.600' fontSize='sm'>
           </Box>
@@ -99,7 +100,6 @@ export default function Home() {
         {tweets.map(element => {
            return <TweetComponent key={element.id} tweet={element} />
         })}
-       
       </main>
 
       <footer className={styles.footer}>
